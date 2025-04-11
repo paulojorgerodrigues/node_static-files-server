@@ -2,6 +2,7 @@
 
 const http = require('node:http');
 const fs = require('fs');
+const mime = require('mime-types');
 
 function createServer() {
   /* Write your code here */
@@ -55,7 +56,9 @@ function createServer() {
 
     const data = fs.readFileSync(realPath);
 
-    res.setHeader('Content-Type', 'text/plain');
+    const contentType = mime.lookup(realPath);
+
+    res.setHeader('Content-Type', contentType);
     res.statusCode = 200;
     res.end(data);
   });
